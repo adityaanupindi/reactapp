@@ -10,12 +10,12 @@
  */
 
 import React from 'react';
-import NavigationContainer from '../../containers/NavigationContainer';
+import SearchContainer from '../../containers/SearchContainer';
 
 export default class HomePage extends React.PureComponent { // eslint-disable-line react/prefer-stateless-function
   render() {
     return (
-      <NavigationContainer />
+      <SearchContainer />
     );
   }
 }
