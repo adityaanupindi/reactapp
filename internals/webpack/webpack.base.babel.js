@@ -20,9 +20,24 @@ module.exports = (options) => ({
       exclude: /node_modules/,
       query: options.babelQuery,
     }, {
-    test: /\.css$/,
-    loader: ExtractTextPlugin.extract({ fallback: 'style-loader', use: 'css-loader' })
-  }, {
+      // Do not transform vendor's CSS with CSS-modules
+      // The point is that they remain in global scope.
+      // Since we require these CSS files in our JS or CSS files,
+      // they will be a part of our compilation either way.
+      // So, no need for ExtractTextPlugin here.
+      test: /\.css$/,
+      use: [
+         {
+           loader: "style-loader"
+         },
+         {
+           loader: "css-loader",
+           options: {
+             modules: true
+           }
+         }
+        ],
+    }, {
       test: /\.(eot|svg|ttf|woff|woff2)$/,
       loader: 'file-loader',
     }, {
@@ -57,7 +72,11 @@ module.exports = (options) => ({
     }],
   },
   plugins: options.plugins.concat([
-    new ExtractTextPlugin( "bundle.css" ),
+    new ExtractTextPlugin({
+    filename: "bundle.css",
+    disable: false,
+    allChunks: true
+  }),
     new webpack.ProvidePlugin({
       // make fetch available
       fetch: 'exports-loader?self.fetch!whatwg-fetch',

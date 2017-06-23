@@ -22,7 +22,7 @@ import 'react-input-range/lib/css/index.css';
 
 function Search() {
   return (
-    <div>
+    <div className={`${styles.wrapper}`}>
       <div className={`${styles.mainSectionBoarder}`}>
           <section className={`${styles.textSection}   ${styles.leftAligned}`}>
             <H2 className={`${styles.paddingleft__Header}`}>
